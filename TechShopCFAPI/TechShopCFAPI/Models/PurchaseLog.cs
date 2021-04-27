@@ -9,6 +9,7 @@ namespace TechShopCFAPI.Models
 {
     public class PurchaseLog
     {
+        List<Link> links = new List<Link>();
         [Key]
         public int Id { get; set; }
 
@@ -46,6 +47,12 @@ namespace TechShopCFAPI.Models
         public string Images { get; set; }
 
         public Nullable<DateTime> PurchasedDate { get; set; }
+
+        [NotMapped]
+        public List<Link> Links
+        {
+            get { return links; }
+        }
 
     }
 }
