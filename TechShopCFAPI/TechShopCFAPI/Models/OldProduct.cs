@@ -9,6 +9,8 @@ namespace TechShopCFAPI.Models
 {
     public class OldProduct
     {
+        List<Link> links = new List<Link>();
+
         [Key]
         public int Id { get; set; }
 
@@ -52,5 +54,11 @@ namespace TechShopCFAPI.Models
         public Nullable<int> Discount { get; set; }
 
         public Nullable<int> Tax { get; set; }
+
+        [NotMapped]
+        public List<Link> Links
+        {
+            get { return links; }
+        }
     }
 }
