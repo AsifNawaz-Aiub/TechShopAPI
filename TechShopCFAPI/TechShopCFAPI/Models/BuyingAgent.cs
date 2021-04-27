@@ -9,6 +9,8 @@ namespace TechShopCFAPI.Models
 {
     public class BuyingAgent
     {
+        List<Link> links = new List<Link>();
+
         [Key]
         public int Id { get; set; }
 
@@ -45,5 +47,11 @@ namespace TechShopCFAPI.Models
         public System.DateTime JoiningDate { get; set; }
 
         public Nullable<DateTime> LastUpdated { get; set; }
+
+        [NotMapped]
+        public List<Link> Links
+        {
+            get { return links; }
+        }
     }
 }
