@@ -14,6 +14,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
     public class OldProductController : ApiController
     {
         OldProductRepository oldProductRepository = new OldProductRepository();
+        PruchaseLogRepository pruchaseLogRepository = new PruchaseLogRepository();
 
         [Route("{id}", Name = "GetOldProductById")]
         public IHttpActionResult Get([FromUri] int id)
@@ -58,11 +59,18 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
         }
 
         [Route("")]
-        public IHttpActionResult Post(Models.OldProduct oldProduct)
+        public IHttpActionResult Post([FromBody]Models.OldProduct oldProduct)
         {
-            oldProductRepository.Insert(oldProduct);
-            string url = Url.Link("GetOldProductById", new { id = oldProduct.Id });
-            return Created(url, oldProduct);
+            if(ModelState.IsValid)
+            {
+                oldProductRepository.Insert(oldProduct);
+                string url = Url.Link("GetOldProductById", new { id = oldProduct.Id });
+                return Created(url, oldProduct);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotImplemented);
+            }
         }
 
         [Route("{id}")]
@@ -75,21 +83,28 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
             else
             {
-                updatedOldProduct.CustomerId = oldProduct.CustomerId;
-                updatedOldProduct.ProductName = oldProduct.ProductName;
-                updatedOldProduct.ProductDescription = oldProduct.ProductDescription;
-                updatedOldProduct.Status = oldProduct.Status;
-                updatedOldProduct.BuyingPrice = oldProduct.BuyingPrice;
-                updatedOldProduct.SellingPrice = oldProduct.SellingPrice;
-                updatedOldProduct.Category = oldProduct.Category;
-                updatedOldProduct.Brand = oldProduct.Brand;
-                updatedOldProduct.Features = oldProduct.Features;
-                updatedOldProduct.Quantity = oldProduct.Quantity;
-                updatedOldProduct.Images = oldProduct.Images;
-                updatedOldProduct.Discount = oldProduct.Discount;
-                updatedOldProduct.Tax = oldProduct.Tax;
-                oldProductRepository.Update(updatedOldProduct);
-                return Ok(updatedOldProduct);
+                if(ModelState.IsValid)
+                {
+                    updatedOldProduct.CustomerId = oldProduct.CustomerId;
+                    updatedOldProduct.ProductName = oldProduct.ProductName;
+                    updatedOldProduct.ProductDescription = oldProduct.ProductDescription;
+                    updatedOldProduct.Status = oldProduct.Status;
+                    updatedOldProduct.BuyingPrice = oldProduct.BuyingPrice;
+                    updatedOldProduct.SellingPrice = oldProduct.SellingPrice;
+                    updatedOldProduct.Category = oldProduct.Category;
+                    updatedOldProduct.Brand = oldProduct.Brand;
+                    updatedOldProduct.Features = oldProduct.Features;
+                    updatedOldProduct.Quantity = oldProduct.Quantity;
+                    updatedOldProduct.Images = oldProduct.Images;
+                    updatedOldProduct.Discount = oldProduct.Discount;
+                    updatedOldProduct.Tax = oldProduct.Tax;
+                    oldProductRepository.Update(updatedOldProduct);
+                    return Ok(updatedOldProduct);
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.NotModified);
+                }
             }
         }
 
@@ -106,6 +121,55 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             {
                 oldProductRepository.Delete(id);
                 return StatusCode(HttpStatusCode.NoContent);
+            }
+        }
+
+        [Route("accept/{id}"), HttpPost]
+        public IHttpActionResult Accept([FromUri]int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var oldProduct = oldProductRepository.Get(id);
+                Models.PurchaseLog purchaseLog = new PurchaseLog();
+                purchaseLog.CustomerId = oldProduct.CustomerId;
+                purchaseLog.ProductName = oldProduct.ProductName;
+                purchaseLog.ProductDescription = oldProduct.ProductDescription;
+                purchaseLog.Status = "Accepted";
+                purchaseLog.BuyingPrice = oldProduct.BuyingPrice;
+                purchaseLog.Category = oldProduct.Category;
+                purchaseLog.Brand = oldProduct.Brand;
+                purchaseLog.Features = oldProduct.Features;
+                purchaseLog.Quantity = oldProduct.Quantity;
+                purchaseLog.Images = oldProduct.Images;
+                purchaseLog.PurchasedDate = DateTime.Now;
+
+                oldProduct.Status = "Accepted";
+                oldProductRepository.Update(oldProduct);
+
+                pruchaseLogRepository.Insert(purchaseLog);
+                string url = Url.Link("GetOldProductById", new { id = oldProduct.Id });
+                return Created(url, purchaseLog);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotImplemented);
+            }
+        }
+
+        [Route("reject/{id}"), HttpPut]
+        public IHttpActionResult Reject([FromUri] int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var oldProduct = oldProductRepository.Get(id);
+       
+                oldProduct.Status = "Rejected";
+                oldProductRepository.Update(oldProduct);
+                return Ok(oldProduct);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotModified);
             }
         }
     }
