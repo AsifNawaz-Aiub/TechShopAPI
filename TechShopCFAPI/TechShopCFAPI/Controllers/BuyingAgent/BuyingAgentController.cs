@@ -64,9 +64,17 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
         [Route("")]
         public IHttpActionResult Post(Models.BuyingAgent buyingAgent)
         {
-            buyingAgentRepository.Insert(buyingAgent);
-            string url = Url.Link("GetBuyingAgentById", new { id = buyingAgent.Id });
-            return Created(url, buyingAgent);
+            if(ModelState.IsValid)
+            {
+                buyingAgentRepository.Insert(buyingAgent);
+                string url = Url.Link("GetBuyingAgentById", new { id = buyingAgent.Id });
+                return Created(url, buyingAgent);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotImplemented);
+            }
+            
         }
 
         [Route("{id}")]
@@ -79,18 +87,25 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
             else
             {
-                updatedBuyingAgent.FullName = buyingAgent.FullName;
-                updatedBuyingAgent.UserName = buyingAgent.UserName;
-                updatedBuyingAgent.ProfilePic = buyingAgent.ProfilePic;
-                updatedBuyingAgent.Password = buyingAgent.Password;
-                updatedBuyingAgent.Email = buyingAgent.Email;
-                updatedBuyingAgent.Phone = buyingAgent.Phone;
-                updatedBuyingAgent.Salary = buyingAgent.Salary;
-                updatedBuyingAgent.Address = buyingAgent.Address;
-                updatedBuyingAgent.JoiningDate = buyingAgent.JoiningDate;
-                updatedBuyingAgent.LastUpdated = buyingAgent.LastUpdated;
-                buyingAgentRepository.Update(updatedBuyingAgent);
-                return Ok(updatedBuyingAgent);
+                if(ModelState.IsValid)
+                {
+                    updatedBuyingAgent.FullName = buyingAgent.FullName;
+                    updatedBuyingAgent.UserName = buyingAgent.UserName;
+                    updatedBuyingAgent.ProfilePic = buyingAgent.ProfilePic;
+                    updatedBuyingAgent.Password = buyingAgent.Password;
+                    updatedBuyingAgent.Email = buyingAgent.Email;
+                    updatedBuyingAgent.Phone = buyingAgent.Phone;
+                    updatedBuyingAgent.Salary = buyingAgent.Salary;
+                    updatedBuyingAgent.Address = buyingAgent.Address;
+                    updatedBuyingAgent.JoiningDate = buyingAgent.JoiningDate;
+                    updatedBuyingAgent.LastUpdated = buyingAgent.LastUpdated;
+                    buyingAgentRepository.Update(updatedBuyingAgent);
+                    return Ok(updatedBuyingAgent);
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.NotModified);
+                }
             }
         }
 
