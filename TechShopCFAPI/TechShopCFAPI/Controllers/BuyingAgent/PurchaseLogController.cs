@@ -60,9 +60,16 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
         [Route("")]
         public IHttpActionResult Post(Models.PurchaseLog purchaseLog)
         {
-            pruchaseLogRepository.Insert(purchaseLog);
-            string url = Url.Link("GetPurchaseLogById", new { id = purchaseLog.Id });
-            return Created(url, purchaseLog);
+            if(ModelState.IsValid)
+            {
+                pruchaseLogRepository.Insert(purchaseLog);
+                string url = Url.Link("GetPurchaseLogById", new { id = purchaseLog.Id });
+                return Created(url, purchaseLog);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotImplemented);
+            }
         }
 
         [Route("{id}")]
@@ -75,19 +82,26 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
             else
             {
-                updatedPurchaseLog.CustomerId = purchaseLog.CustomerId;
-                updatedPurchaseLog.ProductName = purchaseLog.ProductName;
-                updatedPurchaseLog.ProductDescription = purchaseLog.ProductDescription;
-                updatedPurchaseLog.Status = purchaseLog.Status;
-                updatedPurchaseLog.BuyingPrice = purchaseLog.BuyingPrice;
-                updatedPurchaseLog.Category = purchaseLog.Category;
-                updatedPurchaseLog.Brand = purchaseLog.Brand;
-                updatedPurchaseLog.Features = purchaseLog.Features;
-                updatedPurchaseLog.Quantity = purchaseLog.Quantity;
-                updatedPurchaseLog.Images = purchaseLog.Images;
-                updatedPurchaseLog.PurchasedDate = purchaseLog.PurchasedDate;
-                pruchaseLogRepository.Update(updatedPurchaseLog);
-                return Ok(updatedPurchaseLog);
+                if(ModelState.IsValid)
+                {
+                    updatedPurchaseLog.CustomerId = purchaseLog.CustomerId;
+                    updatedPurchaseLog.ProductName = purchaseLog.ProductName;
+                    updatedPurchaseLog.ProductDescription = purchaseLog.ProductDescription;
+                    updatedPurchaseLog.Status = purchaseLog.Status;
+                    updatedPurchaseLog.BuyingPrice = purchaseLog.BuyingPrice;
+                    updatedPurchaseLog.Category = purchaseLog.Category;
+                    updatedPurchaseLog.Brand = purchaseLog.Brand;
+                    updatedPurchaseLog.Features = purchaseLog.Features;
+                    updatedPurchaseLog.Quantity = purchaseLog.Quantity;
+                    updatedPurchaseLog.Images = purchaseLog.Images;
+                    updatedPurchaseLog.PurchasedDate = purchaseLog.PurchasedDate;
+                    pruchaseLogRepository.Update(updatedPurchaseLog);
+                    return Ok(updatedPurchaseLog);
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.NotModified);
+                }
             }
         }
 
