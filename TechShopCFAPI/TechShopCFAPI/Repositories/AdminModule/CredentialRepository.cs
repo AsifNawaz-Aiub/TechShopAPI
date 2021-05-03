@@ -31,7 +31,11 @@ namespace TechShopCFAPI.Repositories.AdminModule
             context.SaveChanges();
         }
 
-
+        public Credential GetByEmail(string email)
+        {
+            Credential crd = context.Credentials.Where(p => p.Email == email && p.Status == 1).FirstOrDefault();
+            return crd;
+        }
 
     }
 }

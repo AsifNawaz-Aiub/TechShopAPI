@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
+using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
 namespace TechShopCFAPI.Controllers.Admin
@@ -30,6 +32,25 @@ namespace TechShopCFAPI.Controllers.Admin
                     return Ok(c);
                 }
             }
+        }
+
+        [Route("api/credentials/{id}"), BasicAuthentication]
+        public IHttpActionResult Get(int id)
+        {
+            Credential cred = credentialRepository.Get(id);
+            if (cred == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(cred);
+        }
+
+        [Route("api/credentials/{id}"), BasicAuthentication]
+        public IHttpActionResult PutChangePass([FromBody]Credential cred, [FromUri]int id)
+        {
+            cred.Id = id;
+            credentialRepository.Update(cred);
+            return Ok();
         }
     }
 }

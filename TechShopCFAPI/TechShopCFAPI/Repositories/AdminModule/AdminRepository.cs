@@ -30,6 +30,12 @@ namespace TechShopCFAPI.Repositories.AdminModule
             return admins;
         }
 
+        public Admin GetByEmail(string email)
+        {
+            Admin admin = context.Admins.Where(p => p.Email == email && p.Status == 1).FirstOrDefault();
+            return admin;
+        }
+
         public List<Admin> GetRestricted()
         {
             List<Admin> admins = context.Admins.Where(x => x.Status == 0).ToList();

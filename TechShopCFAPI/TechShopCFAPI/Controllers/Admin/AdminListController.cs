@@ -38,6 +38,19 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(adminRepository.GetRestricted());
         }
 
+        [Route("profile"), BasicAuthentication]
+        public IHttpActionResult Get(string email)
+        {
+            Models.Admin admin = adminRepository.GetByEmail(email);
+            if (admin == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            admin.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri, Method = "POST", Relation = "Create new Admin" });
+            admin.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri, Method = "PUT", Relation = "Modify Admin" });
+            return Ok(admin);
+        }
+
         [Route("{id}", Name = "GetByAdminId"), BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
@@ -71,6 +84,15 @@ namespace TechShopCFAPI.Controllers.Admin
             return Created("api/admins/" + admin.Id, admin);
         }
 
+        [Route("{id}"), BasicAuthentication]
+        public IHttpActionResult PutAdmin([FromBody]Models.Admin admin, [FromUri]int id)
+        {
+            admin.Id = id;
+            admin.LastUpdated = DateTime.Now;
+            adminRepository.Update(admin);
+            return Ok();
+        }
+
         [Route("BlockAdmin/{id}"), BasicAuthentication]
         public IHttpActionResult PutBlockAdmin(int id)
         {
@@ -80,5 +102,7 @@ namespace TechShopCFAPI.Controllers.Admin
             CredentialRepository.Restrict(admin.Email);
             return Ok();
         }
+
+        
     }
 }
