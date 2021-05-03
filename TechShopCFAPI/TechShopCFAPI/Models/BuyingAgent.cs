@@ -7,43 +7,50 @@ using System.Web;
 
 namespace TechShopCFAPI.Models
 {
-    public class Admin
+    public class BuyingAgent
     {
+        List<Link> links = new List<Link>();
+
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [MaxLength(50), MinLength(3)]
         public string FullName { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [MaxLength(50), MinLength(3), Index(IsUnique = true)]
         public string UserName { get; set; }
 
-        [StringLength(150)]
+        [MaxLength(50), MinLength(3)]
         public string ProfilePic { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [MaxLength(20), MinLength(3)]
+        public string Password { get; set; }
+
+        [Required]
+        [MaxLength(50), MinLength(3), Index(IsUnique = true)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(12)]
+        [MaxLength(11), MinLength(11)]
         public string Phone { get; set; }
+
+        [Required]
+        public decimal Salary { get; set; }
+
+        [Required]
+        [MaxLength(150), MinLength(5)]
+        public string Address { get; set; }
 
         [Required]
         public int Status { get; set; }
 
-        [Required]
-        [StringLength(150)]
-        public string Address { get; set; }
-
         public System.DateTime JoiningDate { get; set; }
 
-        public System.DateTime LastUpdated { get; set; }
+        public Nullable<DateTime> LastUpdated { get; set; }
 
-        [NotMapped]
-        List<Link> links = new List<Link>();
         [NotMapped]
         public List<Link> Links
         {

@@ -49,9 +49,75 @@ namespace TechShopCFAPI.Models
             modelBuilder.Entity<Product>().Property(p => p.Brand).HasColumnType("varchar");
             modelBuilder.Entity<Product>().Property(p => p.Features).HasColumnType("text");
             modelBuilder.Entity<Product>().Property(p => p.Images).HasColumnType("varchar");
+
+
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Id)
+                                              .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                                              .IsRequired();
+
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.FullName).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.UserName).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.ProfilePic).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Password).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Email).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Phone).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Address).HasColumnType("varchar");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.Salary).HasColumnType("decimal").HasPrecision(18, 1);
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.JoiningDate).HasColumnType("datetime");
+            modelBuilder.Entity<BuyingAgent>().Property(p => p.LastUpdated).HasColumnType("datetime");
+
+
+
+            //OldProduct
+            modelBuilder.Entity<OldProduct>().Property(p => p.Id)
+                                              .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                                              .IsRequired();
+            modelBuilder.Entity<OldProduct>().Property(p => p.CustomerId).HasColumnType("int");
+            modelBuilder.Entity<OldProduct>().Property(p => p.ProductName).HasColumnType("varchar");
+            modelBuilder.Entity<OldProduct>().Property(p => p.ProductDescription).HasColumnType("text");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Status).HasColumnType("varchar");
+            modelBuilder.Entity<OldProduct>().Property(p => p.BuyingPrice).HasColumnType("decimal").HasPrecision(18, 1);
+            modelBuilder.Entity<OldProduct>().Property(p => p.SellingPrice).HasColumnType("decimal").HasPrecision(18, 1);
+            modelBuilder.Entity<OldProduct>().Property(p => p.Category).HasColumnType("varchar");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Brand).HasColumnType("varchar");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Features).HasColumnType("text");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Quantity).HasColumnType("int");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Images).HasColumnType("varchar");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Discount).HasColumnType("int");
+            modelBuilder.Entity<OldProduct>().Property(p => p.Tax).HasColumnType("int");
+
+            //PurchaseLog
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Id)
+                                              .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                                              .IsRequired();
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.CustomerId).HasColumnType("int");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.ProductName).HasColumnType("varchar");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.ProductDescription).HasColumnType("text");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Status).HasColumnType("varchar");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.BuyingPrice).HasColumnType("decimal").HasPrecision(18, 1);
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Category).HasColumnType("varchar");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Brand).HasColumnType("varchar");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Features).HasColumnType("text");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Quantity).HasColumnType("int");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.Images).HasColumnType("varchar");
+            modelBuilder.Entity<PurchaseLog>().Property(p => p.PurchasedDate).HasColumnType("datetime");
         }
         public DbSet<Admin> Admins { set; get; }
         public DbSet<Credential> Credentials { set; get; }
         public DbSet<Product> Products { set; get; }
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ShippingData> ShippingDatas { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
+
+        public DbSet<BuyingAgent> BuyingAgents { set; get; }
+        public DbSet<OldProduct> OldProducts { set; get; }
+        public DbSet<PurchaseLog> PurchaseLogs { set; get; }
+
+        public DbSet<Sales_Log> Sales_Log { get; set; }
+        public DbSet<SalesExecutive> SalesExecutives { get; set; }
+        public virtual DbSet<Promotion> Promotions { get; set; }
     }
 }

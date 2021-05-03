@@ -7,40 +7,49 @@ using System.Web;
 
 namespace TechShopCFAPI.Models
 {
-    public class Admin
+    public class SalesExecutive
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
         public string FullName { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [StringLength(20)]
         public string UserName { get; set; }
 
-        [StringLength(150)]
+        [Required]
+        [StringLength(20)]
         public string ProfilePic { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
+        public string Password { get; set; }
+
+        [Required]
+        [StringLength(20)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(12)]
+        [StringLength(20)]
         public string Phone { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Address { get; set; }
+
+        [Required]
+        public decimal Salary { get; set; }
 
         [Required]
         public int Status { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string Address { get; set; }
-
         public System.DateTime JoiningDate { get; set; }
 
-        public System.DateTime LastUpdated { get; set; }
+        public Nullable<System.DateTime> LastUpdated { get; set; }
 
         [NotMapped]
         List<Link> links = new List<Link>();
