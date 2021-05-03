@@ -14,7 +14,7 @@ namespace TechShopCFAPI.Repositories.AdminModule
             List<Customer> customers = context.Customers.Where(x => x.Status == "Active").ToList();
             return customers;
         }
-
+        
         public void BlockCustomer(string email)
         {
             var customer = context.Customers.Where(x => x.Email == email).FirstOrDefault();
@@ -45,6 +45,11 @@ namespace TechShopCFAPI.Repositories.AdminModule
             var customer = context.Customers.Where(x => x.Email == email).FirstOrDefault();
             customer.Status = "Active";
             context.SaveChanges();
+        }
+
+        public Customer GetCust(int customerId)
+        {
+            return context.Customers.Find(customerId);
         }
 
         public List<Sales_Log> History(int id)

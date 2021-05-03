@@ -45,11 +45,12 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(cust);
         }
 
-        [Route("BlockCustomer/{id}")]
-        public IHttpActionResult PutBlockCustomer([FromUri]int id)
+        [Route("Block/{id}")]
+        public IHttpActionResult PutBlockCustomer(int customerId)
         {
-            var cust = custRepo.Get(id);
+            var cust = custRepo.Get(customerId);
             custRepo.BlockCustomer(cust.Email);
+
             credentialRepository.Restrict(cust.Email);
             return Ok();
 
@@ -69,9 +70,9 @@ namespace TechShopCFAPI.Controllers.Admin
 
 
         [Route("ReactiveCustomer/{id}")]
-        public IHttpActionResult PutReactivateCustomer([FromUri]int id)
+        public IHttpActionResult PutReactivateCustomer(int customerId)
         {
-            var cust = custRepo.Get(id);
+            var cust = custRepo.GetCust(customerId);
             custRepo.ReactivateCustomer(cust.Email);
             credentialRepository.Reactive(cust.Email);
             return Ok();

@@ -15,7 +15,18 @@ namespace TechShopCFAPI.Controllers.Admin
         PurchaseRepository purRepo = new PurchaseRepository();
 
         [Route("api/purchaselogs")]
-        public IHttpActionResult Get(string startDate, string endDate)
+        public IHttpActionResult Get()
+        {
+            return Ok(purRepo.GetAll());
+        }
+
+        [Route("api/purchaselogs/name")]
+        public IHttpActionResult Get(string productName)
+        {
+            return Ok(purRepo.GetByName(productName));
+        }
+        /*[Route("api/purchaselogs")]
+        public IHttpActionResult Get(DateTime startDate, DateTime endDate)
         {
             if (startDate == null && endDate == null)
             {
@@ -30,6 +41,6 @@ namespace TechShopCFAPI.Controllers.Admin
                 return StatusCode(HttpStatusCode.BadRequest);
             }
 
-        }
+        }*/
     }
 }
