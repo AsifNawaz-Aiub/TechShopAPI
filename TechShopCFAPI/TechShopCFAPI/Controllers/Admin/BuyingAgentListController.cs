@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
@@ -16,25 +17,25 @@ namespace TechShopCFAPI.Controllers.Admin
         BuyingAgentRepository byRepo = new BuyingAgentRepository();
         CredentialRepository credentialRepository = new CredentialRepository();
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult GetActive()
         {
             return Ok(byRepo.GetActive());
         }
 
-        [Route("name")]
+        [Route("name"), BasicAuthentication]
         public IHttpActionResult GetByName(string name)
         {
             return Ok(byRepo.GetByName(name));
         }
 
-        [Route("restricted")]
+        [Route("restricted"), BasicAuthentication]
         public IHttpActionResult GetRestricted()
         {
             return Ok(byRepo.GetRestricted());
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
             BuyingAgent by = byRepo.Get(id);
@@ -49,12 +50,12 @@ namespace TechShopCFAPI.Controllers.Admin
         }
 
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Post(BuyingAgent by)
         {
             by.ProfilePic = "default.jpg";
-            by.JoiningDate = DateTime.Now;
             by.Status = 1;
+            by.JoiningDate = DateTime.Now;
             by.LastUpdated = DateTime.Now;
             byRepo.Insert(by);
 
@@ -69,7 +70,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Created("api/buyingagents/" + by.Id, by);
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult PutBuyingAgent([FromBody]BuyingAgent by, [FromUri]int id)
         {
             by.Id = id;
@@ -78,7 +79,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok();
         }
 
-        [Route("Block/{id}")]
+        [Route("Block/{id}"), BasicAuthentication]
         public IHttpActionResult PutBlockBuyingAgent(int id)
         {
             var by = byRepo.Get(id);

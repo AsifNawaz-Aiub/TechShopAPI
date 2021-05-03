@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
@@ -16,25 +17,25 @@ namespace TechShopCFAPI.Controllers.Admin
         SalesExecutiveRepository saleExeRepo = new SalesExecutiveRepository();
         CredentialRepository credentialRepository = new CredentialRepository();
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult GetActive()
         {
             return Ok(saleExeRepo.GetActive());
         }
 
-        [Route("name")]
+        [Route("name"), BasicAuthentication]
         public IHttpActionResult GetByName(string name)
         {
             return Ok(saleExeRepo.GetByName(name));
         }
 
-        [Route("restricted")]
+        [Route("restricted"), BasicAuthentication]
         public IHttpActionResult GetRestricted()
         {
             return Ok(saleExeRepo.GetRestricted());
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
             SalesExecutive salesEXe = saleExeRepo.Get(id);
@@ -47,7 +48,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(salesEXe);
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Post(SalesExecutive salesExecutive)
         {
             salesExecutive.ProfilePic = "default.jpg";
@@ -67,7 +68,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Created("api/salesexecutives/" + salesExecutive.Id, salesExecutive);
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Put([FromBody]SalesExecutive salesExe, [FromUri]int id)
         {
             salesExe.Id = id;
@@ -77,7 +78,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok();
         }
 
-        [Route("Block/{id}")]
+        [Route("Block/{id}"), BasicAuthentication]
         public IHttpActionResult PutBlockSalesExecutive([FromUri] int id)
         {
             var by = saleExeRepo.Get(id);

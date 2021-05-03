@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Repositories.AdminModule;
 
 namespace TechShopCFAPI.Controllers.Admin
@@ -14,7 +15,7 @@ namespace TechShopCFAPI.Controllers.Admin
 
         OldProductRepository oldProductRepository = new OldProductRepository();
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Get(string category)
         {
             if (category == "All")
@@ -25,7 +26,7 @@ namespace TechShopCFAPI.Controllers.Admin
                 return Ok(oldProductRepository.GetInStockByCategory(category));
         }
 
-        [Route("a")]
+        [Route("a"), BasicAuthentication]
         public IHttpActionResult Gete()
         {
 

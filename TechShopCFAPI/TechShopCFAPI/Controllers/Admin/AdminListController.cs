@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
@@ -18,26 +19,26 @@ namespace TechShopCFAPI.Controllers.Admin
 
         public CredentialRepository CredentialRepository { get => credentialRepository; set => credentialRepository = value; }
 
-        //[Route(""),BasicAuthentication]
-        [Route("")]
+        //[Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult GetActive()
         {
             return Ok(adminRepository.GetActive());
         }
 
-        [Route("name")]
+        [Route("name"),BasicAuthentication]
         public IHttpActionResult GetByName(string name)
         {
             return Ok(adminRepository.GetByName(name));
         }
 
-        [Route("restricted")]
+        [Route("restricted"), BasicAuthentication]
         public IHttpActionResult GetRestricted()
         {
             return Ok(adminRepository.GetRestricted());
         }
 
-        [Route("{id}", Name = "GetByAdminId")]
+        [Route("{id}", Name = "GetByAdminId"), BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
             Models.Admin admin = adminRepository.Get(id);
@@ -50,7 +51,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(admin);
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Post(Models.Admin admin)
         {
             admin.ProfilePic = "default.jpg";
@@ -70,7 +71,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Created("api/admins/" + admin.Id, admin);
         }
 
-        [Route("BlockAdmin/{id}")]
+        [Route("BlockAdmin/{id}"), BasicAuthentication]
         public IHttpActionResult PutBlockAdmin(int id)
         {
             var admin = adminRepository.Get(id);

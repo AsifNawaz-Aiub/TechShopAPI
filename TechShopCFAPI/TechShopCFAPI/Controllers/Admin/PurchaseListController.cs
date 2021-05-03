@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
@@ -14,13 +15,13 @@ namespace TechShopCFAPI.Controllers.Admin
         TechShopDbContext context = new TechShopDbContext();
         PurchaseRepository purRepo = new PurchaseRepository();
 
-        [Route("api/purchaselogs")]
+        [Route("api/purchaselogs"), BasicAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(purRepo.GetAll());
         }
 
-        [Route("api/purchaselogs/name")]
+        [Route("api/purchaselogs/name"), BasicAuthentication]
         public IHttpActionResult Get(string productName)
         {
             return Ok(purRepo.GetByName(productName));

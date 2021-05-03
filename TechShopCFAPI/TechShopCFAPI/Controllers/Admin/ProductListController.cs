@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repositories.AdminModule;
 
@@ -14,13 +15,13 @@ namespace TechShopCFAPI.Controllers.Admin
     {
         ProductRepository productRepository = new ProductRepository();
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(productRepository.GetAll());
         }
 
-        [Route("productName")]
+        [Route("productName"), BasicAuthentication]
         public IHttpActionResult Get(string productName)
         {
             if (productName != "")
@@ -30,7 +31,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(StatusCode(HttpStatusCode.NotFound));
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
             Product product = productRepository.Get(id);
@@ -42,7 +43,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok(product);
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult PostProduct(Product product)
         {
             product.DateAdded = DateTime.Now;
@@ -51,7 +52,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok();
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult PutProduct([FromBody]Product product, [FromUri]int id)
         {
             product.Id = id;
@@ -60,7 +61,7 @@ namespace TechShopCFAPI.Controllers.Admin
             return Ok();
         }
 
-        [Route("add/{id}")]
+        [Route("add/{id}"), BasicAuthentication]
         public IHttpActionResult PutAddQuantity([FromBody]Product product, [FromUri]int id)
         {
             
