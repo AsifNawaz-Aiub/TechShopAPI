@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repository;
-using TechShopCFAPI.BuyingAgentAuthorizations;
 using System.Threading;
 using System.Web;
+using TechShopCFAPI.Attributes;
 
 namespace TechShopCFAPI.Controllers.BuyingAgent
 {
@@ -17,7 +17,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
     {
         BuyingAgentRepository buyingAgentRepository = new BuyingAgentRepository();
 
-        [Route("{id}", Name = "GetBuyingAgentById")]
+        [Route("{id}", Name = "GetBuyingAgentById"), BasicAuthentication]
         public IHttpActionResult Get([FromUri] int id)
         {
             var buyingAgnet = buyingAgentRepository.Get(id);
@@ -34,11 +34,12 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                 buyingAgnet.Links.Add(new Link() { Url = insertUrl, Method = "POST", Relation = "Create a new Buying Agent" });
                 buyingAgnet.Links.Add(new Link() { Url = mainUrl, Method = "PUT", Relation = "Update an existing Buying Agent" });
                 buyingAgnet.Links.Add(new Link() { Url = mainUrl, Method = "DELETE", Relation = "Delete an existing Buying Agent" });
+                buyingAgnet.Links.Add(new Link() { Url = insertUrl+ "/update_password/"+buyingAgnet.Id, Method = "PUT", Relation = "Update an existing Buying Agent password" });
                 return Ok(buyingAgnet);
             }
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Get()
         {
             var buyingAgnets = buyingAgentRepository.GetAll().ToList();
@@ -56,12 +57,13 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                     buyingAgent.Links.Add(new Link() { Url = mainUrl, Method = "POST", Relation = "Create a new Buying Agent" });
                     buyingAgent.Links.Add(new Link() { Url = mainUrl + "/" + buyingAgent.Id, Method = "PUT", Relation = "Update an existing Buying Agent" });
                     buyingAgent.Links.Add(new Link() { Url = mainUrl + "/" + buyingAgent.Id, Method = "DELETE", Relation = "Delete an existing Buying Agent" });
+                    buyingAgent.Links.Add(new Link() { Url = mainUrl + "/update_password/" + buyingAgent.Id, Method = "PUT", Relation = "Update an existing Buying Agent password" });
                 }
                 return Ok(buyingAgnets);
             }
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Post(Models.BuyingAgent buyingAgent)
         {
             if(ModelState.IsValid)
@@ -72,12 +74,12 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
             else
             {
-                return StatusCode(HttpStatusCode.NotImplemented);
+                return StatusCode(HttpStatusCode.BadRequest);
             }
             
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Put([FromBody] Models.BuyingAgent buyingAgent, [FromUri] int id)
         {
             var updatedBuyingAgent = buyingAgentRepository.Get(id);
@@ -91,14 +93,10 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                 {
                     updatedBuyingAgent.FullName = buyingAgent.FullName;
                     updatedBuyingAgent.UserName = buyingAgent.UserName;
-                    updatedBuyingAgent.ProfilePic = buyingAgent.ProfilePic;
-                    updatedBuyingAgent.Password = buyingAgent.Password;
                     updatedBuyingAgent.Email = buyingAgent.Email;
                     updatedBuyingAgent.Phone = buyingAgent.Phone;
-                    updatedBuyingAgent.Salary = buyingAgent.Salary;
                     updatedBuyingAgent.Address = buyingAgent.Address;
-                    updatedBuyingAgent.JoiningDate = buyingAgent.JoiningDate;
-                    updatedBuyingAgent.LastUpdated = buyingAgent.LastUpdated;
+                    updatedBuyingAgent.LastUpdated = DateTime.Now;
                     buyingAgentRepository.Update(updatedBuyingAgent);
                     return Ok(updatedBuyingAgent);
                 }
@@ -109,7 +107,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Delete([FromUri] int id)
         {
             var buyingAgnet = buyingAgentRepository.Get(id);
@@ -125,19 +123,35 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
         }
 
-        [Route("get_validate_buying_agent"), LoginBuyingAgentAuthorization]
-        public IHttpActionResult GetvalidateBuyingAgent()
+        [Route("update_password/{id}"), HttpPut, BasicAuthentication]
+        public IHttpActionResult UpdatePassword([FromBody] Models.BuyingAgent buyingAgent, [FromUri] int id)
         {
-            var buyingAgent = buyingAgentRepository.GetBuyingAgentByEmail(Thread.CurrentPrincipal.Identity.Name);
-
-            if(buyingAgent == null)
+            var updatedBuyingAgent = buyingAgentRepository.Get(id);
+            if (updatedBuyingAgent == null)
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
             else
             {
-                return Ok(buyingAgent);
+                if (ModelState.IsValid)
+                {
+                    updatedBuyingAgent.Password = buyingAgent.Password;
+                    updatedBuyingAgent.LastUpdated = DateTime.Now;
+                    buyingAgentRepository.Update(updatedBuyingAgent);
+                    return Ok(updatedBuyingAgent);
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.NotModified);
+                }
             }
+        }
+
+        [Route(""), HttpGet, BasicAuthentication]
+        public IHttpActionResult BuyingAgentByEmail(string Email)
+        {
+            var details = buyingAgentRepository.GetBuyingAgentByEmail(Email);
+            return Ok(details);
         }
     }
 }
