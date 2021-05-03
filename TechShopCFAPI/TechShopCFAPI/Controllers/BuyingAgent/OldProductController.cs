@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repository;
 
@@ -16,7 +17,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
         OldProductRepository oldProductRepository = new OldProductRepository();
         PruchaseLogRepository pruchaseLogRepository = new PruchaseLogRepository();
 
-        [Route("{id}", Name = "GetOldProductById")]
+        [Route("{id}", Name = "GetOldProductById"), BasicAuthentication]
         public IHttpActionResult Get([FromUri] int id)
         {
             var oldProduct = oldProductRepository.Get(id);
@@ -32,11 +33,13 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                 oldProduct.Links.Add(new Link() { Url = mainUrl, Method = "GET", Relation = "Get an existing Old Product" });
                 oldProduct.Links.Add(new Link() { Url = mainUrl, Method = "PUT", Relation = "Update an existing Old Product" });
                 oldProduct.Links.Add(new Link() { Url = mainUrl, Method = "DELETE", Relation = "Delete an existing Old Product" });
+                oldProduct.Links.Add(new Link() { Url = mainUrl + "/accept/" + oldProduct.Id, Method = "POST", Relation = "Accept an existing Old Product" });
+                oldProduct.Links.Add(new Link() { Url = mainUrl + "/reject/" + oldProduct.Id, Method = "PUT", Relation = "Reject an existing Old Product" });
                 return Ok(oldProduct);
             }
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Get()
         {
             var oldProducts = oldProductRepository.GetAll().ToList();
@@ -53,12 +56,14 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                     oldProduct.Links.Add(new Link() { Url = mainUrl + "/" + oldProduct.Id, Method = "GET", Relation = "Get an existing Old Product" });
                     oldProduct.Links.Add(new Link() { Url = mainUrl + "/" + oldProduct.Id, Method = "PUT", Relation = "Update an existing Old Product" });
                     oldProduct.Links.Add(new Link() { Url = mainUrl + "/" + oldProduct.Id, Method = "DELETE", Relation = "Delete an existing Old Product" });
+                    oldProduct.Links.Add(new Link() { Url = mainUrl + "/accept/" + oldProduct.Id, Method = "POST", Relation = "Accept an existing Old Product" });
+                    oldProduct.Links.Add(new Link() { Url = mainUrl + "/reject/" + oldProduct.Id, Method = "PUT", Relation = "Reject an existing Old Product" });
                 }
                 return Ok(oldProducts);
             }
         }
 
-        [Route("")]
+        [Route(""), BasicAuthentication]
         public IHttpActionResult Post([FromBody]Models.OldProduct oldProduct)
         {
             if(ModelState.IsValid)
@@ -73,7 +78,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Put([FromBody] Models.OldProduct oldProduct, [FromUri] int id)
         {
             var updatedOldProduct = oldProductRepository.Get(id);
@@ -108,7 +113,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}"), BasicAuthentication]
         public IHttpActionResult Delete([FromUri] int id)
         {
             var oldProduct = oldProductRepository.Get(id);
@@ -124,7 +129,7 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
         }
 
-        [Route("accept/{id}"), HttpPost]
+        [Route("accept/{id}"), HttpPost, BasicAuthentication]
         public IHttpActionResult Accept([FromUri]int id)
         {
             if (ModelState.IsValid)
@@ -152,11 +157,11 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
             }
             else
             {
-                return StatusCode(HttpStatusCode.NotImplemented);
+                return StatusCode(HttpStatusCode.BadRequest);
             }
         }
 
-        [Route("reject/{id}"), HttpPut]
+        [Route("reject/{id}"), HttpPut, BasicAuthentication]
         public IHttpActionResult Reject([FromUri] int id)
         {
             if (ModelState.IsValid)
