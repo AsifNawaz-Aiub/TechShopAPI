@@ -70,9 +70,20 @@ namespace TechShopCFAPI.Models
             modelBuilder.Entity<PurchaseLog>().Property(p => p.Quantity).HasColumnType("int");
             modelBuilder.Entity<PurchaseLog>().Property(p => p.Images).HasColumnType("varchar");
             modelBuilder.Entity<PurchaseLog>().Property(p => p.PurchasedDate).HasColumnType("datetime");
+
+            //Credential
+            modelBuilder.Entity <Credential>().Property(p => p.Id)
+                                              .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                                              .IsRequired();
+            modelBuilder.Entity<Credential>().Property(p => p.UserName).HasColumnType("varchar");
+            modelBuilder.Entity<Credential>().Property(p => p.Password).HasColumnType("varchar");
+            modelBuilder.Entity<Credential>().Property(p => p.Email).HasColumnType("varchar");
+
         }
         public DbSet<BuyingAgent> BuyingAgents  { set; get; }
         public DbSet<OldProduct> OldProducts { set; get; }
         public DbSet<PurchaseLog> PurchaseLogs { set; get; }
+        public DbSet<BACustomer> BACustomers { set; get; }
+        public DbSet<Credential> Credentials { set; get; }
     }
 }
