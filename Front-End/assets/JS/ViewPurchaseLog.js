@@ -61,9 +61,13 @@ function searchCat()
 				{
 					$("#showPurchaseLog").html(purchaseLog);
 				}
+				else if(searchedElment == "")
+				{
+					$("#msg").html("*Please type a category");
+				}
 				else
 				{
-					$("#msg").html("No matches!!");
+					$("#msg").html("*No matches!!");
 				}
 			}
 			else
@@ -91,7 +95,7 @@ function searchByDate()
 		dateD = '0'+dateD;
 	}
 	var date = today.getFullYear()+'-'+dateM+'-'+dateD;
-	
+
 	// console.log(from);
 	// console.log(to);
 	// console.log(date);
