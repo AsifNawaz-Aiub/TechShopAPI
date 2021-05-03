@@ -2,7 +2,6 @@
 {
 	position: sticky;
 	top: 0;
-	background-color: #c5fcf7;
 }
 
 .linkBtn
@@ -12,13 +11,12 @@
 
 .submitBtn
 {
-	margin: 10px;
 	border: none;
 	cursor: pointer;
 	border-radius: 4px;
 	background-color: #008080;
 	color: white;
-	padding: 3px 15px;
+	padding: 5px 15px;
 }
 
 .submitBtn:hover
@@ -60,6 +58,38 @@
 	padding: 5px 15px;
 }
 .updateBtn:hover
+{
+	background-color: black;
+	color: white;
+}
+
+.acceptBtn
+{
+	margin: 10px;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: #009933;
+	color: white;
+	padding: 5px 15px;
+}
+.acceptBtn:hover
+{
+	background-color: black;
+	color: white;
+}
+
+.yellowtBtn
+{
+	margin: 10px;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: #FFFF0A;
+	color: black;
+	padding: 5px 15px;
+}
+.yellowtBtn:hover
 {
 	background-color: black;
 	color: white;
@@ -122,10 +152,8 @@ select
 .navbar ul 
 {
   list-style-type: none; /*hide bullet point of the list*/
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #003369;
+  overflow: auto;
+  background-color: #003366;
 }
 
 .navbar li 
@@ -147,32 +175,35 @@ select
   background-color: #111;
 }
 
-.tootip
-{
-	position: relative;
-	display: inline-block;
+.tooltip {
+  position: relative;
+  display: inline-block;
 }
 
-.tooltip .tooltiptext
-{
-	visibility: hidden;
-	width: 120px;
-	background-color: black;
-	color: white;
-	text-align: center;
-	border-radius: 5px;
-	padding: 5px;
-
-	position: absolute;
-	margin-left: 40px;
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
 }
 
-.tooltip:hover .tooltiptext 
-{
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.tooltip:hover .tooltiptext {
   visibility: visible;
-}
-
-#OTC
-{
-	color: #FF0000; 
 }
