@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using TechShopCFAPI.Attributes;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Models.Sales.DataModels;
 using TechShopCFAPI.Models.Sales.ViewModels;
@@ -18,12 +19,13 @@ namespace TechShopCFAPI.Controllers
         TechShopDbContext context = new TechShopDbContext();
         ProductsDataModel productsData = new ProductsDataModel();
         CartDataModel cartData = new CartDataModel();
-        System.Web.HttpCookie sc = new HttpCookie("sc1");
+        //System.Web.HttpCookie sc = new HttpCookie("sc1");
 
-        [Route("Profile", Name = "SalesExecutiveProfile")]
+        [Route("Profile", Name = "SalesExecutiveProfile"),BasicAuthintcationAttribute]
         public IHttpActionResult Get()
         {
-           
+          // SalesExecutiveDataModel d = new SalesExecutiveDataModel();
+           // var dd = d.GetValidSalesExecutive(1);
             return Ok(context.SalesExecutives);
         }
         [Route("Products", Name = "SalesExecutiveProducts")]
@@ -54,6 +56,8 @@ namespace TechShopCFAPI.Controllers
           Models.Product  data = context.Products.Find(id);
             Models.Cart cart = new Cart();
 
+            if (q <=0) { return Ok(new { msg = "In valid Quantity !" }); }
+            if (q > data.Quantity) { return Ok(new { msg = "Not enough stock !" }); }
             cart.ProductId = id;
             cart.ProductName = data.ProductName;
             cart.Quantity = q;
@@ -79,16 +83,17 @@ namespace TechShopCFAPI.Controllers
         }
 
         [Route("Sold"), HttpPost]
-        public IHttpActionResult Solddd()
+        public IHttpActionResult Solddd( info info)
         {
             //string cname, string address, string phone
             ProductsDataModel data = new ProductsDataModel();
             Models.Product SellingProduct = new Product();
 
-
+       
             var CurrentQuantity = 0;
             var UpdatedQuantity = 0;
             var id = 0;
+     
             foreach (var c in context.Carts)
             {
 
@@ -104,9 +109,9 @@ namespace TechShopCFAPI.Controllers
                 var sl = new Sales_Log()
                 {
                     UserId = 2,
-                    CustomerName = "adsas",
-                    CustomerAddress= "adsas",
-                    CustomerPhoneNo = "adsas",
+                    CustomerName = info.fullName,
+                    CustomerAddress= info.address,
+                    CustomerPhoneNo = info.phone,
                     ProductId = c.ProductId,
                     SalesExecutiveId = 1,
                     DateSold = DateTime.Today,
@@ -118,11 +123,38 @@ namespace TechShopCFAPI.Controllers
                     Profits = ((SellingProduct.SellingPrice) * c.Quantity) - ((SellingProduct.BuyingPrice) * c.Quantity)
                 };
 
-                data.insertSales(sl);
+                data.insertSales(sl, c.Id);
+               
             }
             return Ok();
         }
+        [Route("LoadChart", Name = "LoadChart")]
+        public IHttpActionResult GetChart()
+        {
+            SalesLogDataModel log = new SalesLogDataModel();
 
+            // var categoryNameQuantity = new List<KeyValuePair<string, int>>();
+            var DateAndQuantity = new List<KeyValuePair<string, int>>();
+            var alllog = log.GetAllSalesLog().ToList();
+
+            Dictionary<DateTime, bool> check = new Dictionary<DateTime, bool>();
+            foreach (var item in alllog)
+            {
+                check.Add((item.DateSold), true);
+            }
+            foreach (KeyValuePair<DateTime, bool> item in check)
+            {
+                DateTime currDate = item.Key;
+
+                int totalQuantity = context.Sales_Logs.Where(x => x.DateSold == currDate).Count();
+                DateAndQuantity.Add(new KeyValuePair<string, int>(currDate.ToString(), totalQuantity));
+            }
+            return Json(DateAndQuantity);
+
+
+
+            //return Ok(context.Carts);
+        }
 
 
 

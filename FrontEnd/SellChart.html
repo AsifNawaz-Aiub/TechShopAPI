@@ -14,7 +14,6 @@
     <link href="./Contents/vendor/aos/aos.css" rel="stylesheet">
     <link href="./Contents/CSS_Files/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <style>
         * {
@@ -126,7 +125,11 @@
 
     <div style="margin-left:130px" id="load">
 
-
+        <h1 style="text-align:center">Sell Chart</h1>
+        <div id="piechart">
+    
+    
+        </div>
 
   
     </div>
@@ -135,46 +138,38 @@
 
 </html>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-
-
-
-    $(document).ready(function(){
-     if(Cookies.get("Authorization") == null){ window.location = "Login.html";}
-
-    var body = $("#load");
-$.ajax({
-    type: "get",
-    url:"http://localhost:54047//api/SalesExecutive/Profile",
-    datatype: 'json',
-    headers:{
-            "Authorization":"basic "+Cookies.get("Authorization")
-        },
- 
-
-    complete:function(xmlHttp,status){
-        if(xmlHttp.status == 200)
-        {
-           // var oldProducts = "<table border='1' id='oldProductsList' cellspacing='0'><tr><th>Customer ID</th><th>Product Name</th><th>Product Description</th><th>Requested Price</th><th>Category</th><th>Brand</th><th>Features</th><th>Quantity</th><th>Options</th></tr>";
-            var profileData = xmlHttp.responseJSON;
-            var profile;
-            console.log(profileData.length);
-            for (var i = 0; i < profileData.length; i++) {
-               
-                 profile="<table width='25%' class='table'><tr> <td>Full Name:</td> <td>"+profileData[i].FullName+"</td> </tr>   <tr> <td>Userame:</td> <td>"+profileData[i].UserName+"</td> </tr>   <tr> <td>Email:</td> <td>"+profileData[i].Email+"</td> </tr>  <tr> <td>Phone:</td> <td>"+profileData[i].Phone+"</td></tr>  <tr> <td>Address:</td> <td>"+profileData[i].Address+"</td> </tr>  </table>";
-                     
+    $(document).ready(function () {
+        var soldData = Array();
+        soldData.push(['Categories', 'Quantity (Pcs)']);
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            url: 'http://localhost:54047//api/SalesExecutive/LoadChart',
+            success: function (result) {
+                //result = JSON.parse(result);
+                for (var i = 0; i < result.length; i++) {
+                    soldData.push([result[i].Key, result[i].Value]);
+                }
             }
-           // oldProducts += "</table>"
-           body.append(profile);
+        });
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(
+                soldData
+            );
+            var options = {
+                title: 'Sold by Date Pie-Chart',
+                is3D: true,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
         }
-        else
-        {
-            $("#msg").html(xmlHttp.status+":"+xmlHttp.statusText);
-        }
-    }
-
-
-});
-});
-
+    });
 </script>

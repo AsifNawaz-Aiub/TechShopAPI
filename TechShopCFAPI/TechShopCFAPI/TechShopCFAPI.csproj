@@ -98,6 +98,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\BasicAuthintcationAttribute.cs" />
+    <Compile Include="Controllers\CredentialController.cs" />
     <Compile Include="Controllers\SalesExecutiveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -117,11 +119,14 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Credential.cs" />
+    <Compile Include="Models\info.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Promotion.cs" />
     <Compile Include="Models\SalesExecutive.cs" />
     <Compile Include="Models\Sales\DataModels\CartDataModel.cs" />
     <Compile Include="Models\Sales\DataModels\ProductsDataModel.cs" />
+    <Compile Include="Models\Sales\DataModels\SalesExecutiveDataModel.cs" />
+    <Compile Include="Models\Sales\DataModels\SalesLogDataModel.cs" />
     <Compile Include="Models\Sales\ViewModels\CartViewModel.cs" />
     <Compile Include="Models\Sales_Log.cs" />
     <Compile Include="Models\TechShopDbContext.cs" />

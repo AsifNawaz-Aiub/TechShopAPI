@@ -75,10 +75,19 @@ namespace TechShopCFAPI.Models.Sales.DataModels
             data.Entry(prd).State = System.Data.Entity.EntityState.Modified;
             data.SaveChanges();
         }
-        public void insertSales (Sales_Log sl)
+        public void insertSales (Sales_Log sl, int c)
         {
             data.Sales_Logs.Add(sl);
             data.SaveChanges();
+            data.Carts.Remove(data.Carts.Find(c));
+            data.SaveChanges();
+
+        }
+        public Credential cred(string Email, string Password )
+        {
+            var c = data.Credentials.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
+            //Models.Credential cc = (Models.Credential)c;
+            return (c);
         }
         public List<Product> GetProductByName(string Name)
         {
