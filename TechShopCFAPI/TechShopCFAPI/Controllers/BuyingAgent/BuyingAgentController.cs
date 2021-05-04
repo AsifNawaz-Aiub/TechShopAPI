@@ -126,7 +126,10 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
         [Route("update_password/{id}"), HttpPut, BasicAuthentication]
         public IHttpActionResult UpdatePassword([FromBody] Models.BuyingAgent buyingAgent, [FromUri] int id)
         {
+            CredentialRepository credentialRepository = new CredentialRepository();
             var updatedBuyingAgent = buyingAgentRepository.Get(id);
+            var updatedCredentials = credentialRepository.GetByEmail(updatedBuyingAgent.Email);
+
             if (updatedBuyingAgent == null)
             {
                 return StatusCode(HttpStatusCode.NoContent);
@@ -138,6 +141,8 @@ namespace TechShopCFAPI.Controllers.BuyingAgent
                     updatedBuyingAgent.Password = buyingAgent.Password;
                     updatedBuyingAgent.LastUpdated = DateTime.Now;
                     buyingAgentRepository.Update(updatedBuyingAgent);
+                    updatedCredentials.Password = buyingAgent.Password;
+                    credentialRepository.Update(updatedCredentials);
                     return Ok(updatedBuyingAgent);
                 }
                 else
