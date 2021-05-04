@@ -7,7 +7,10 @@ using System.Web;
 namespace TechShopCFAPI.Models
 {
     public class Promotion
-    {   [Key]
+
+    {
+        [Key]
+
         public int Id { get; set; }
 
         [Required]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,9 @@ namespace TechShopCFAPI.Models
 {
     public class Product
     {
+
         List<Link> links = new List<Link>();
+
         [Key]
         public int Id { get; set; }
 
@@ -55,10 +58,12 @@ namespace TechShopCFAPI.Models
 
         public System.DateTime LastUpdated { get; set; }
 
+
         [NotMapped]
         public List<Link> Links
         {
             get { return links; }
         }
+
     }
 }

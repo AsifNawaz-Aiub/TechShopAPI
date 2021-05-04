@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Linq;
 using System.Web;
 
@@ -11,15 +13,22 @@ namespace TechShopCFAPI.Models
         [Key]
         public int Id { get; set; }
 
-        public Nullable<int> UserId { get; set; }
 
-        [Required][StringLength(20)]
+        [ForeignKey("Customer")]
+        public Nullable<int> UserId { get; set; }
+        public Customer Customer { get; set; }
+
+        [Required]
+        [StringLength(20)]
         public string CustomerName { get; set; }
 
-        [Required][StringLength(20)]
+        [Required]
+        [StringLength(20)]
         public string CustomerAddress { get; set; }
 
-        [Required][StringLength(20)]
+        [Required]
+        [StringLength(20)]
+
         public string CustomerPhoneNo { get; set; }
 
         [Required]
@@ -38,7 +47,10 @@ namespace TechShopCFAPI.Models
         [Required]
         public decimal TotalPrice { get; set; }
 
-        [Required][StringLength(20)]
+
+        [Required]
+        [StringLength(20)]
+
         public string Status { get; set; }
         public Nullable<decimal> Profits { get; set; }
     }
