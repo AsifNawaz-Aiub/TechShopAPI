@@ -41,7 +41,7 @@ $(document).ready(function(){
 		var newPassword = document.getElementById("newPassword").value;
 		var confirmNewPassword = document.getElementById("confirmNewPassword").value;
 
-		// console.log(newPassword);
+		//console.log(newPassword);
 		// console.log(confirmNewPassword);
 
 		var flag = false;
@@ -96,7 +96,7 @@ $(document).ready(function(){
 				data:{
                         "fullName" :fullName,
                         "userName" :userName,
-                        "password" :password,
+                        "password" :newPassword,
                         "email" :email,
                        	"phone" :phoneNumber,
                        	"salary" :salary,
