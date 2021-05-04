@@ -1,9 +1,8 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechShopCFAPI", "TechShopCFAPI\TechShopCFAPI.csproj", "{AB70A4E3-E441-45DE-A2F1-4732DB21768A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechShopCFAPI", "TechShopCFAPI\TechShopCFAPI.csproj", "{514BF2B3-A6EB-4F38-98FE-8EDAE141C8CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB70A4E3-E441-45DE-A2F1-4732DB21768A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB70A4E3-E441-45DE-A2F1-4732DB21768A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB70A4E3-E441-45DE-A2F1-4732DB21768A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB70A4E3-E441-45DE-A2F1-4732DB21768A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514BF2B3-A6EB-4F38-98FE-8EDAE141C8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514BF2B3-A6EB-4F38-98FE-8EDAE141C8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514BF2B3-A6EB-4F38-98FE-8EDAE141C8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514BF2B3-A6EB-4F38-98FE-8EDAE141C8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9C9AFBC6-4819-4E34-90BD-71DD5A8DEE73}
+		SolutionGuid = {A145CACE-7328-4AC4-BAB1-9A8A4A13302B}
 	EndGlobalSection
 EndGlobal

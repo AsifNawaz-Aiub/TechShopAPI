@@ -10,6 +10,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "TechShopCFAPI.Models.TechShopDbContext";
         }
 
         protected override void Seed(TechShopCFAPI.Models.TechShopDbContext context)

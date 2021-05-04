@@ -10,9 +10,15 @@ namespace TechShopCFAPI.Repository
     {
         protected TechShopDbContext context = new TechShopDbContext();
 
+
         public List<TEntity> GetAll()
         {
             return context.Set<TEntity>().ToList();
+        }
+        public void Delete(int id)
+        {
+            context.Set<TEntity>().Remove(context.Set<TEntity>().Find(id));
+            context.SaveChanges();
         }
 
         public TEntity Get(int id)
@@ -29,12 +35,6 @@ namespace TechShopCFAPI.Repository
         public void Update(TEntity entity)
         {
             context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            context.Set<TEntity>().Remove(context.Set<TEntity>().Find(id));
             context.SaveChanges();
         }
     }
