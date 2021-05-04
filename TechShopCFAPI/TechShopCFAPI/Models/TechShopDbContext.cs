@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -102,22 +102,18 @@ namespace TechShopCFAPI.Models
             modelBuilder.Entity<PurchaseLog>().Property(p => p.Images).HasColumnType("varchar");
             modelBuilder.Entity<PurchaseLog>().Property(p => p.PurchasedDate).HasColumnType("datetime");
         }
+        
         public DbSet<Admin> Admins { set; get; }
         public DbSet<Credential> Credentials { set; get; }
         public DbSet<Product> Products { set; get; }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<ShippingData> ShippingDatas { get; set; }
-        public DbSet<WishList> WishLists { get; set; }
-
-        public DbSet<BuyingAgent> BuyingAgents { set; get; }
-        public DbSet<OldProduct> OldProducts { set; get; }
-        public DbSet<PurchaseLog> PurchaseLogs { set; get; }
-
-        public DbSet<Sales_Log> Sales_Log { get; set; }
-        public DbSet<SalesExecutive> SalesExecutives { get; set; }
         public virtual DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Sales_Log> Sales_Logs { get; set; }
+        public DbSet<OldProduct> OldProducts { get; set; }
+        public DbSet<SalesExecutive> SalesExecutives { get; set; }
+        public DbSet<BuyingAgent> BuyingAgents { get; set; }
+        public DbSet<PurchaseLog> PurchaseLogs { get; set; }
+        
     }
 }

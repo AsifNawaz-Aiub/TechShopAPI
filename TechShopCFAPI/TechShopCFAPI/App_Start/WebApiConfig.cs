@@ -1,4 +1,3 @@
-﻿using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,9 @@ namespace TechShopCFAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
         }

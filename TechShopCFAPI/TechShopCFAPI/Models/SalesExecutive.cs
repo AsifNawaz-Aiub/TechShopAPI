@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,52 +7,23 @@ using System.Web;
 
 namespace TechShopCFAPI.Models
 {
-    public class SalesExecutive
+    public class Review
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string FullName { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string UserName { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string ProfilePic { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Password { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Phone { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Address { get; set; }
-
-        [Required]
-        public decimal Salary { get; set; }
-
-        [Required]
-        public int Status { get; set; }
-
-        [Required]
-        public System.DateTime JoiningDate { get; set; }
-
-        public Nullable<System.DateTime> LastUpdated { get; set; }
-
-        [NotMapped]
         List<Link> links = new List<Link>();
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ReviewId { get; set; }
+        [Required, MaxLength(100), MinLength(3)]
+        public string Body { get; set; }
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        [ForeignKey("Product")]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+      
+        [Required]
+        public DateTime DatePosted { get; set; }
         [NotMapped]
         public List<Link> Links
         {

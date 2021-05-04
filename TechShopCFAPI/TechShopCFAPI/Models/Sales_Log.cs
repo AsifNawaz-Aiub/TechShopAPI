@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using System.Xml.Serialization;
+
 
 namespace TechShopCFAPI.Models
 {
@@ -13,9 +13,7 @@ namespace TechShopCFAPI.Models
     {
         [Key]
         public int Id { get; set; }
-
-        public Nullable<int> UserId { get; set; }
-
+        
         [Required]
         [StringLength(20)]
         public string CustomerName { get; set; }
@@ -49,7 +47,7 @@ namespace TechShopCFAPI.Models
         [StringLength(20)]
         public string Status { get; set; }
         public Nullable<decimal> Profits { get; set; }
-
+      
         [NotMapped]
         public DateTime StartDate { get; set; }
         [NotMapped]

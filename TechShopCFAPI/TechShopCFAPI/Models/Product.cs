@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Linq;
 using System.Web;
 
@@ -36,9 +37,9 @@ namespace TechShopCFAPI.Models
         [Required]
         [StringLength(50)]
         public string Brand { get; set; }
-        
+
         public string Features { get; set; }
-        
+
         [Required]
         public int Quantity { get; set; }
 
@@ -47,14 +48,11 @@ namespace TechShopCFAPI.Models
         public string Images { get; set; }
         
         public Nullable<int> Discount { get; set; }
-        
-        public Nullable<int> Tax { get; set; }
-        
-        public System.DateTime DateAdded { get; set; }
-        
-        public System.DateTime LastUpdated { get; set; }
 
-        [NotMapped]
-        public int NewQuantity { get; set; }
+        public Nullable<int> Tax { get; set; }
+
+        public System.DateTime DateAdded { get; set; }
+
+        public System.DateTime LastUpdated { get; set; }
     }
 }

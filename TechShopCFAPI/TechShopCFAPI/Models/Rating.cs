@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,13 +13,16 @@ namespace TechShopCFAPI.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RatingId { get; set; }
 
+
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public int ProductId { get; set; }
-        //public Product Product { get; set; }
+        [ForeignKey("Product")]
+        public int ProductId { get; set; } 
+        public Product Product { get; set; }
 
-        [Range(1, 5), Required]
+        [Range(1,5), Required]
+      
         public int RatingPoint { get; set; }
         [Required]
         public DateTime DateRated { get; set; }
