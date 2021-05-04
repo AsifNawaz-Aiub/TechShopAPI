@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repository;
@@ -19,6 +20,12 @@ namespace TechShopCFAPI.Controllers.Customer
         public IHttpActionResult Get(int id)
         {
             var wishList = wishListRepository.Get(id);
+            var url = HttpContext.Current.Request.Url.AbsoluteUri;
+            wishList.Links.Add(new Link() { Url = url, Method = "GET", Relation = "Get a specific wish list data by id." });
+            wishList.Links.Add(new Link() { Url = url.Substring(0, url.Length-3), Method = "POST", Relation = "Insert a wish list." });
+            wishList.Links.Add(new Link() { Url = url+"/Customer/", Method="GET", Relation="Get wish list by customer id."});
+            wishList.Links.Add(new Link() { Url = url + "/Customer/", Method = "GET", Relation = "Get wish list by customer id." });
+
             if (wishList == null)
             {
                 return StatusCode(HttpStatusCode.NotFound);

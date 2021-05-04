@@ -45,5 +45,9 @@ namespace TechShopCFAPI.Models
         public virtual ICollection<ShippingData> ShippingDatas { get; set; }
         [JsonIgnore, XmlIgnore]
         public virtual ICollection<WishList> WishLists { get; set; }
+        [JsonIgnore, XmlIgnore]
+        public virtual ICollection<OldProduct> OldProduct { get; set; }
+        [JsonIgnore, XmlIgnore]
+        public virtual ICollection<Sales_Log> Sales_Logs { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace TechShopCFAPI.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           // modelBuilder.Entity<Customer>().HasKey<int>(i => i.CustomerId).hasco;
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rating> Ratings { get; set; }
@@ -23,5 +22,13 @@ namespace TechShopCFAPI.Models
         public DbSet<ShippingData> ShippingDatas { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Sales_Log> Sales_Logs { get; set; }
+        public DbSet<OldProduct> OldProducts { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Credential> Credentials { get; set; }
+        public DbSet<SalesExecutive> SalesExecutives { get; set; }
+        public DbSet<BuyingAgent> BuyingAgents { get; set; }
+        public DbSet<PurchaseLog> PurchaseLogs { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }

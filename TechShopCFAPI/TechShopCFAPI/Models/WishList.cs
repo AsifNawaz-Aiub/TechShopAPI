@@ -15,7 +15,9 @@ namespace TechShopCFAPI.Models
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
+        public Product Product { get; set; }
         [Required]
         public DateTime DateWished { get; set; }
         [NotMapped]

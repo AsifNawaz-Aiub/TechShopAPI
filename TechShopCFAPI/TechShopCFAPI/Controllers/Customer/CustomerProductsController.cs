@@ -116,5 +116,18 @@ namespace TechShopCFAPI.Controllers.Customer
                 return Ok(products);
             }
         }
+        [Route("{id}"), HttpPut]
+        public IHttpActionResult Put([FromUri]int id, [FromBody]Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                productRepository.Update(product);
+                return Ok(product);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+        }
     }
 }

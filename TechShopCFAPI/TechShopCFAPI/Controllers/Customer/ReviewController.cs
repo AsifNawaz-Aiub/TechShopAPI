@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using TechShopCFAPI.Models;
 using TechShopCFAPI.Repository;
@@ -17,6 +18,10 @@ namespace TechShopCFAPI.Controllers.Customer
         public IHttpActionResult Get(int id)
         {
             var review = reviewRepository.Get(id);
+            var url = HttpContext.Current.Request.Url.AbsoluteUri;
+            review.Links.Add(new Link() { Url = url.Substring(0, url.Length - 3), Method = "POST", Relation = "Post a new review." });
+            review.Links.Add(new Link() { Url = url, Method = "GET", Relation = "Get an specific review data." });
+
             if (review!=null)
             {
                 return Ok(review);
@@ -33,11 +38,15 @@ namespace TechShopCFAPI.Controllers.Customer
             if (ModelState.IsValid)
             {
                 var newReview = reviewRepository.GetAll().Where(x => x.CustomerId == review.CustomerId && x.ProductId == review.ProductId).FirstOrDefault();
+                var url = HttpContext.Current.Request.Url.AbsoluteUri;
+                review.Links.Add(new Link() { Url = url.Substring(0, url.Length - 3), Method = "POST", Relation = "Post a new review." });
+                review.Links.Add(new Link() { Url = url, Method = "GET", Relation = "Get an specific review data." });
+
                 if (newReview==null)
                 {
                     reviewRepository.Insert(review);
-                    string url = Url.Link("GetByReviewId", new { id = review.ReviewId });
-                    return Created(url, review);
+                    string URL = Url.Link("GetByReviewId", new { id = review.ReviewId });
+                    return Created(URL, review);
                 }
                 else
                 {
