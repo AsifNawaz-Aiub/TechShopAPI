@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Linq;
 using System.Web;
 
@@ -44,7 +46,7 @@ namespace TechShopCFAPI.Models
         [Required]
         [StringLength(250)]
         public string Images { get; set; }
-
+        
         public Nullable<int> Discount { get; set; }
 
         public Nullable<int> Tax { get; set; }

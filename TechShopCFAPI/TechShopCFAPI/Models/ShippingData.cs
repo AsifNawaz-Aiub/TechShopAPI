@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,8 @@ namespace TechShopCFAPI.Models
         public string CardType { get; set; }
         [MinLength(10), MaxLength(20)]
         public string CardNumber { get; set; }
-        [Range(20,25)]
+
+        [Range(20, 25)]
         public string ExpirationYear { get; set; }
         [Range(1, 12)]
         public string ExpirationMonth { get; set; }

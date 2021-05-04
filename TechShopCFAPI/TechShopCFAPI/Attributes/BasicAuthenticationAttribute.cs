@@ -9,6 +9,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+
 using TechShopCFAPI.Repository;
 
 namespace TechShopCFAPI.Attributes
@@ -28,9 +29,11 @@ namespace TechShopCFAPI.Attributes
                 string[] splittedText = decoded.Split(new char[] { ':' });
                 string email = splittedText[0];
                 string password = splittedText[1];
-                BuyingAgentRepository buyingAgentRepository = new BuyingAgentRepository();
-                var buyingAgent = buyingAgentRepository.GetBuyingAgentByEmail(email);
-                if (email == buyingAgent.Email && password == buyingAgent.Password)
+                
+                CredentialRepository credRepo = new CredentialRepository();
+                Credential cred = new Credential();
+                cred = credRepo.Validation(email, password);
+                if (cred != null)
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(email), null);
                 }

@@ -1,9 +1,11 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+
 
 namespace TechShopCFAPI.Models
 {
@@ -11,11 +13,7 @@ namespace TechShopCFAPI.Models
     {
         [Key]
         public int Id { get; set; }
-
-        [ForeignKey("Customer")]
-        public Nullable<int> UserId { get; set; }
-        public Customer Customer { get; set; }
-
+        
         [Required]
         [StringLength(20)]
         public string CustomerName { get; set; }
@@ -29,6 +27,7 @@ namespace TechShopCFAPI.Models
         public string CustomerPhoneNo { get; set; }
 
         [Required]
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         public Nullable<int> SalesExecutiveId { get; set; }
@@ -48,5 +47,13 @@ namespace TechShopCFAPI.Models
         [StringLength(20)]
         public string Status { get; set; }
         public Nullable<decimal> Profits { get; set; }
+      
+        [NotMapped]
+        public DateTime StartDate { get; set; }
+        [NotMapped]
+        public DateTime EndDate { get; set; }
+
+        [JsonIgnore, XmlIgnore]
+        public virtual Product Product { get; set; }
     }
 }

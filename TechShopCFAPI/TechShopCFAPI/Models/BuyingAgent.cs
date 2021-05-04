@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,6 @@ namespace TechShopCFAPI.Models
 
         [Required]
         [MaxLength(50), MinLength(3)]
-      
         public string FullName { get; set; }
 
         [Required]
@@ -44,6 +44,9 @@ namespace TechShopCFAPI.Models
         [Required]
         [MaxLength(150), MinLength(5)]
         public string Address { get; set; }
+
+        [Required]
+        public int Status { get; set; }
 
         public System.DateTime JoiningDate { get; set; }
 
