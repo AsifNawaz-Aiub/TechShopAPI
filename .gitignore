@@ -1,5 +1,11 @@
 bin
 obj
+Global.asax
+Global.asax.cs
+packages.config
 TechShopCFAPI.csproj
 TechShopCFAPI.csproj.user
-.vs
+Web.config
+Web.Debug.config
+Web.Release.config
+TechShopCFAPI.sln
