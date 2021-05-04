@@ -404,7 +404,8 @@ $.ajax({
 <script>
     $("#logout").click(function(){
   window.location="Login.html";
-  Cookies.set("Authorization",null);
+//Cookies.set("Authorization",null);
+Cookies.remove("Authorization");
   
   
 });

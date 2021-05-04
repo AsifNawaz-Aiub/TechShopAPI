@@ -162,6 +162,7 @@
     <!-- <a href="" class="btn text-light btn-primary w-25 " id="sell">Sell</a><br><br> -->
     <!-- <a href="Products.html" class="btn text-light btn-success w-25 ">Continue Selling</a> <br><br> -->
     <button class="btn text-light btn-primary w-25" id="sell" >Sell</button>
+
 </body>
 
 </html>
@@ -280,8 +281,8 @@ if(!flag)
 <script>
     $("#logout").click(function(){
   window.location="Login.html";
-  Cookies.set("Authorization",null);
-  
+  //Cookies.set("Authorization",null);
+  Cookies.remove("Authorization");
   
 });
 </script>

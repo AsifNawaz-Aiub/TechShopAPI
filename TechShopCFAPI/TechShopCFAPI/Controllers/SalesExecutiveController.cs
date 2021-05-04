@@ -168,6 +168,12 @@ namespace TechShopCFAPI.Controllers
             //return Ok(context.Carts);
         }
 
+      /*  [Route("ClearCart", Name = "clearcart"),HttpDelete]
+        public IHttpActionResult DeleteCart()
+        {
+            return Ok(context.Carts);
+        }*/
+
 
 
     }
