@@ -1,4 +1,3 @@
-﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +16,7 @@ namespace TechShopCFAPI.Models
 
         [Required]
         [MaxLength(50), MinLength(3)]
+      
         public string FullName { get; set; }
 
         [Required]
