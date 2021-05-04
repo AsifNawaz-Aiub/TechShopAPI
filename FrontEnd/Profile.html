@@ -108,7 +108,8 @@
     <div class="header">
         <a href="#default" class="logo">Sales Executive</a>
         <div class="header-right">
-            <a class="active" href="/SalesExecutiveLogOut/index">Logout</a>
+            <!-- <a class="active" id="logout" href="">Logout</a>  -->
+             <button type="button" class="btn-danger" id="logout">Logout</button> 
           
         </div>
     </div>
@@ -177,4 +178,13 @@ $.ajax({
 });
 });
 
+</script>
+
+<script>
+    $("#logout").click(function(){
+  window.location="Login.html";
+  Cookies.set("Authorization",null);
+  
+  
+});
 </script>

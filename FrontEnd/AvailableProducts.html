@@ -105,7 +105,7 @@
     <div class="header">
         <a href="#default" class="logo">Sales Executive</a>
         <div class="header-right">
-            <a class="active" href="/SalesExecutiveLogOut/index">Logout</a>
+            <button type="button" class="btn-danger" id="logout">Logout</button> 
           
         </div>
     </div>
@@ -124,7 +124,7 @@
     </div>
 
     <div style="margin-left:130px" id="load">
-        <table width='25%' class='table'> <tr><th>Product Name</th><th>Product Description</th><th>Status</th><th>Buying Price</th><th>Selling Price</th><th>Category</th><th>Brand</th><th>Features</th><th>Quantity</th><th>Images</th><th>Discount</th><th>TAX</th><th>Date Added</th><th>Last Updated</th></tr>
+        <table width='25%' class='table' id="all_products"> <tr><th>Product Name</th><th>Product Description</th><th>Status</th><th>Buying Price</th><th>Selling Price</th><th>Category</th><th>Brand</th><th>Features</th><th>Quantity</th><th>Images</th><th>Discount</th><th>TAX</th><th>Date Added</th><th>Last Updated</th></tr>
             <tbody id="tbody">
 
             </tbody>
@@ -139,16 +139,16 @@
                     <a href="UpcomingProducts.html"class="w3-bar-item w3-button tablink"> Upcoming Products </a>
                     <a href="DiscountProducts.html"class="w3-bar-item w3-button tablink"> Discount Products </a>
             </div>
-        
+        </div>
         
             <div style="float:right">
-                <h7>Search By: </h7>
+                <!-- <h7>Search By: </h7>
                 <select id="SearchBy" style="float:right">
                     <option value="Name">Name</option>
                     <option value="Category">Category</option>
                 </select> <br>
                 <input type="text" id="SearchValue">
-                <input type="submit" id="SearchButton" value="Search" style="float:right">
+                <input type="submit" id="SearchButton" value="Search" style="float:right"> -->
                <br> <input type="text" id="searcAny" placeholder="Search here by anything" style="float:right; width:270px;">
             </div>
         
@@ -390,4 +390,12 @@ $.ajax({
 });
 });
 
+</script>
+<script>
+    $("#logout").click(function(){
+  window.location="Login.html";
+  Cookies.set("Authorization",null);
+  
+  
+});
 </script>

@@ -14,6 +14,7 @@
     <link href="./Contents/vendor/aos/aos.css" rel="stylesheet">
     <link href="./Contents/CSS_Files/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <style>
         * {
@@ -107,7 +108,8 @@
     <div class="header">
         <a href="#default" class="logo">Sales Executive</a>
         <div class="header-right">
-            <a class="active" href="/SalesExecutiveLogOut/index">Logout</a>
+            <!-- <a class="active" href="/SalesExecutiveLogOut/index">Logout</a> -->
+            <button type="button" class="btn-danger" id="logout">Logout</button> 
           
         </div>
     </div>
@@ -162,13 +164,16 @@
 
 
     $(document).ready(function(){
-        
+        if(Cookies.get("Authorization") == null){ window.location = "Login.html";}
 
     var body = $("#load");
 $.ajax({
     type: "get",
     url:"http://localhost:54047//api/SalesExecutive/Cart",
     datatype: 'json',
+    headers:{
+            "Authorization":"basic "+Cookies.get("Authorization")
+        },
  
 
     complete:function(xmlHttp,status){
@@ -204,4 +209,12 @@ $.ajax({
 });
 });
 
+</script>
+<script>
+    $("#logout").click(function(){
+  window.location="Login.html";
+  Cookies.set("Authorization",null);
+  
+  
+});
 </script>

@@ -13,6 +13,7 @@
     <link href="./Contents/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="./Contents/vendor/aos/aos.css" rel="stylesheet">
     <link href="./Contents/CSS_Files/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -105,8 +106,8 @@
     <div class="header">
         <a href="#default" class="logo">Sales Executive</a>
         <div class="header-right">
-            <a class="active" href="/SalesExecutiveLogOut/index">Logout</a>
-          
+            <!-- <a class="active" href="/SalesExecutiveLogOut/index">Logout</a> -->
+            <button type="button" class="btn-danger" id="logout">Logout</button> 
         </div>
     </div>
 
@@ -146,13 +147,13 @@
         
         
             <div style="float:right">
-                <h7>Search By: </h7>
+                <!-- <h7>Search By: </h7>
                 <select id="SearchBy" style="float:right">
                     <option value="Name">Name</option>
                     <option value="Category">Category</option>
                 </select> <br>
                 <input type="text" id="SearchValue">
-                <input type="submit" id="SearchButton" value="Search" style="float:right">
+                <input type="submit" id="SearchButton" value="Search" style="float:right"> -->
                <br> <input type="text" id="searcAny" placeholder="Search here by anything" style="float:right; width:270px;">
             </div>
         
@@ -192,6 +193,7 @@
                     type: "get",
                     url: "/SalesExecutive/SearchBy" + SearchBy + "?SearchValue=" + SearchValue,
                     datatype: 'json',
+            
     
                     success: function (result) {
     
@@ -324,11 +326,15 @@
     
 <script>
     $(document).ready(function(){
+        if(Cookies.get("Authorization") == null){ window.location = "Login.html";}
     var body = $("#load");
 $.ajax({
     type: "get",
     url:"http://localhost:54047//api/SalesExecutive/Products",
     datatype: 'json',
+    headers:{
+            "Authorization":"basic "+Cookies.get("Authorization")
+        },
  
 
     complete:function(xmlHttp,status){
@@ -346,7 +352,7 @@ $.ajax({
                    Data= "<tr>" +
                                 "<td>" + productData[i].ProductName + "</td>" +
                                 "<td>" + productData[i].ProductDescription + "</td>" +
-                                "<td>" + productData[i].Status + "</td>" +
+                                "<td style='Color:Green'>" + productData[i].Status + "</td>" +
                                 "<td>" + productData[i].BuyingPrice + "</td>" +
                                 "<td>" + productData[i].SellingPrice + "</td>" +
                                 "<td>" + productData[i].Category + "</td>" +
@@ -364,7 +370,7 @@ $.ajax({
                                 var Data2 = "<tr>" +
                                 "<td>" + productData[i].ProductName + "</td>" +
                                 "<td>" + productData[i].ProductDescription + "</td>" +
-                                "<td>" + productData[i].Status + "</td>" +
+                                "<td style='Color:Red'>" + productData[i].Status + "</td>" +
                                 "<td>" + productData[i].BuyingPrice + "</td>" +
                                 "<td>" + productData[i].SellingPrice + "</td>" +
                                 "<td>" + productData[i].Category + "</td>" +
@@ -394,4 +400,12 @@ $.ajax({
 });
 });
 
+</script>
+<script>
+    $("#logout").click(function(){
+  window.location="Login.html";
+  Cookies.set("Authorization",null);
+  
+  
+});
 </script>

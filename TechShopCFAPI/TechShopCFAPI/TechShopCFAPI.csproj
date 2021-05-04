@@ -120,6 +120,7 @@
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Credential.cs" />
     <Compile Include="Models\info.cs" />
+    <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Promotion.cs" />
     <Compile Include="Models\SalesExecutive.cs" />

@@ -105,7 +105,7 @@
     <div class="header">
         <a href="#default" class="logo">Sales Executive</a>
         <div class="header-right">
-            <a class="active" href="/SalesExecutiveLogOut/index">Logout</a>
+            <button type="button" class="btn-danger" id="logout">Logout</button> 
           
         </div>
     </div>
@@ -138,20 +138,20 @@
                     <a href="AvailableProducts.html"class="w3-bar-item w3-button tablink"> Available Products</a>
                     <a href="UpcomingProducts.html"class="w3-bar-item w3-button tablink"> Upcoming Products </a>
                     <a href="DiscountProducts.html"class="w3-bar-item w3-button tablink"> Discount Products </a>
+                </div>
             </div>
         
-        
             <div style="float:right">
-                <h7>Search By: </h7>
+                <!-- <h7>Search By: </h7>
                 <select id="SearchBy" style="float:right">
                     <option value="Name">Name</option>
                     <option value="Category">Category</option>
                 </select> <br>
                 <input type="text" id="SearchValue">
-                <input type="submit" id="SearchButton" value="Search" style="float:right">
+                <input type="submit" id="SearchButton" value="Search" style="float:right"> -->
                <br> <input type="text" id="searcAny" placeholder="Search here by anything" style="float:right; width:270px;">
             </div>
-        
+          
         
             <br>
             <br>
@@ -391,4 +391,12 @@ $.ajax({
 });
 });
 
+</script>
+<script>
+    $("#logout").click(function(){
+  window.location="Login.html";
+  Cookies.set("Authorization",null);
+  
+  
+});
 </script>

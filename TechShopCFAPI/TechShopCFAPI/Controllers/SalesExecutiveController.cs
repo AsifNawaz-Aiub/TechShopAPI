@@ -31,8 +31,18 @@ namespace TechShopCFAPI.Controllers
         [Route("Products", Name = "SalesExecutiveProducts"), BasicAuthintcationAttribute]
         public IHttpActionResult GetProducts()
         {
-            var mainUrl = HttpContext.Current.Request.Url.AbsoluteUri;
-            return Ok(context.Products);
+            var FullUrl = HttpContext.Current.Request.Url.AbsoluteUri;
+           // List<Models.Product> prod = new Product();
+           var prod = productsData.GetAllProducts();
+            foreach (var c in prod) 
+            {
+                c.Links.Add(new Link() { Url = FullUrl, Method = "GET", Relation = "Get All Products" });
+                c.Links.Add(new Link() { Url = FullUrl+ "/AvailableProducts", Method = "GET", Relation = "Get All Available Products" });
+                c.Links.Add(new Link() { Url = FullUrl + "/UpcomingProducts", Method = "GET", Relation = "Get All Up Coming Products" });
+                c.Links.Add(new Link() { Url = FullUrl + "/DiscountProducts", Method = "GET", Relation = "Get All Discount Products" });
+            }
+           
+            return Ok(prod);
             
         }
         [Route("AvailableProducts", Name = "SalesExecutiveAvailableProducts")]

@@ -11,7 +11,7 @@ namespace TechShopCFAPI.Models.Sales.DataModels
 
         public List<Product> GetAllProducts()
         {
-            return data.Products.OrderByDescending(x => x.Id).ToList();
+            return data.Products.ToList();
         }
         public int GetProductStockQuantity(int id)
         {
