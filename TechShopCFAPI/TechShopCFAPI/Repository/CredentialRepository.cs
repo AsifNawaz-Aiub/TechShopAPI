@@ -15,5 +15,9 @@ namespace TechShopCFAPI.Repository
             var c = context.Credentials.Where(x => x.Email == Email && x.Password == Password && x.Type == 3).FirstOrDefault();
             return c;
         }
+        public Credential GetByEmail(string Email)
+        {
+            return context.Credentials.Where(x => x.Email == Email).FirstOrDefault();
+        }
     }
 }
